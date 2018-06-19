@@ -1,8 +1,8 @@
-package by.exadel.todo.repository;
+package by.practice.todo.repository;
 
 
-import by.exadel.todo.model.Period;
-import by.exadel.todo.model.Task;
+import by.practice.todo.model.Period;
+import by.practice.todo.model.Task;
 
 import java.sql.*;
 import java.util.ArrayList;

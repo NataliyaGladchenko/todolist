@@ -1,7 +1,7 @@
-package by.exadel.todo.repository;
+package by.practice.todo.repository;
 
 
-import by.exadel.todo.model.Project;
+import by.practice.todo.model.Project;
 
 import java.sql.*;
 import java.util.ArrayList;

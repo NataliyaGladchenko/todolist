@@ -1,4 +1,4 @@
-package by.exadel.todo.model;
+package by.practice.todo.model;
 
 import java.util.List;
 

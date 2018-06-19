@@ -1,4 +1,4 @@
-package by.exadel.todo.model;
+package by.practice.todo.model;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;

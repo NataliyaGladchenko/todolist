@@ -1,12 +1,12 @@
-package by.exadel.todo;
+package by.practice.todo;
 
 import java.sql.SQLException;
 import java.util.List;
 
-import by.exadel.todo.repository.ProjectRepository;
-import by.exadel.todo.model.Project;
-import by.exadel.todo.model.Task;
-import by.exadel.todo.repository.TaskRepository;
+import by.practice.todo.repository.ProjectRepository;
+import by.practice.todo.model.Project;
+import by.practice.todo.model.Task;
+import by.practice.todo.repository.TaskRepository;
 
 public class ToDoApp {
     private ProjectRepository projectRepository;

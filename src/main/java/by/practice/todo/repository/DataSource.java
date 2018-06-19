@@ -1,4 +1,4 @@
-package by.exadel.todo.repository;
+package by.practice.todo.repository;
 
 
 import java.io.IOException;
