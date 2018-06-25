@@ -38,16 +38,10 @@ public class Project {
 
     @Override
     public String toString() {
-        return projectName;
+        return projectName + "\n" + tasks;
+
     }
 
-    public void printProject() {
-        System.out.println(projectName );
-        if (tasks != null) {
-            System.out.println("The tasks of this project:");
-            for (Task task : tasks) {
-                System.out.println(task);
-            }
-        }
-    }
+
+
 }

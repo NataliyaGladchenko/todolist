@@ -12,30 +12,30 @@ public class ToDoApp {
     private ProjectRepository projectRepository;
     private TaskRepository taskRepository;
 
-    private ToDoApp() {
+    public ToDoApp() {
         this.projectRepository = new ProjectRepository();
         this.taskRepository = new TaskRepository();
     }
 
-    private void demo() throws SQLException {
+    public void demo() throws SQLException {
         List<Project> projects = projectRepository.getAllProjects();
 
         for (Project project : projects) {
             long projectId = project.getId();
             List<Task> tasks = taskRepository.getTasksByProjectId(projectId);
             project.setTasks(tasks);
-           ;
+
         }
 
         for (Project project : projects) {
             long projectId = project.getId();
             for (Task task : project.getTasks()) {
-                if (task.getId()%2==0) {
-                    taskRepository.complete(task.getId());
-                }
+
+                taskRepository.uncomplete(task.getId());
+
             }
             project.setTasks(taskRepository.getTasksByProjectId(projectId));
-            project.printProject();
+            System.out.println(project);
         }
     }
 

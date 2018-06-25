@@ -22,7 +22,9 @@ public class DataSource {
             this.dbName = properties.getProperty("db.name");
             this.dbUser = properties.getProperty("db.user");
             this.dbPassword = properties.getProperty("db.password");
-        } catch (IOException e) {
+
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
