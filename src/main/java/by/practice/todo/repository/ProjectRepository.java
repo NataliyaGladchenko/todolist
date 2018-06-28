@@ -29,4 +29,22 @@ public class ProjectRepository {
         }
         return projects;
     }
+
+    public void addProject(String projectName) throws SQLException{
+        Connection connection = DataSource.getInstance().getConnection();
+        Statement statement = connection.createStatement();
+        PreparedStatement preparedStatement = connection.prepareStatement("insert into projects (project_name) value (?)");
+        preparedStatement.setString(1,projectName);
+        preparedStatement.executeUpdate();
+
+        if (preparedStatement != null){
+            preparedStatement.close();
+        }
+        if (statement != null) {
+            statement.close();
+        }
+        if (connection != null) {
+            connection.close();
+        }
+    }
 }

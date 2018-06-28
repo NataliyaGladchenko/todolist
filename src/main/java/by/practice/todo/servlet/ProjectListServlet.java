@@ -15,12 +15,11 @@ import java.sql.SQLException;
 import java.util.List;
 
 @WebServlet("/")
-public class MainServlet extends HttpServlet {
+public class ProjectListServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-
 
         ProjectRepository projectRepository = new ProjectRepository();
         TaskRepository taskRepository = new TaskRepository();
@@ -31,18 +30,14 @@ public class MainServlet extends HttpServlet {
                 long projectId = project.getId();
                 List<Task> tasks = taskRepository.getTasksByProjectId(projectId);
                 project.setTasks(tasks);
-
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-
         req.setAttribute("projects", projects);
 
-
         req.getRequestDispatcher("projectlist.jsp").forward(req, resp);
-
     }
 
 }

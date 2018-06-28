@@ -37,6 +37,9 @@ public class ToDoApp {
             project.setTasks(taskRepository.getTasksByProjectId(projectId));
             System.out.println(project);
         }
+        String proj = "project1";
+        System.out.println(taskRepository.figId(proj));
+
     }
 
     public static void main(String[] args) throws SQLException {
