@@ -25,14 +25,14 @@ public class AddTaskServlet extends HttpServlet {
 
         String projectName = request.getParameter("project_name");
         String description = request.getParameter("description");
+        Boolean completed = Boolean.getBoolean(request.getParameter("completed"));
         Date createdDate = Date.valueOf(request.getParameter("created_date"));
         String period = request.getParameter("period");
 
 
         TaskRepository taskRepository = new TaskRepository();
         try {
-            Long projectId = taskRepository.figId(projectName);
-            taskRepository.addTask(projectId, description, createdDate, period);
+            taskRepository.addTask( projectName, description,completed, createdDate, period);
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -18,7 +18,7 @@
 <form action="addtaskform" method="post">
     Project name: <input type="text" name="project_name"/><br/>
     Description: <input type="text" name="description"/><br/>
-    Completed: <input type="checkbox" name="completed"/><br/>
+    Completed: <input type="checkbox" name="completed" /><br/>
     Created date: <input type="date" name="created_date"/><br/>
 
     Period: <input type="text" name="period"/>

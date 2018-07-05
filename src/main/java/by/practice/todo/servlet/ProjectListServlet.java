@@ -1,9 +1,7 @@
 package by.practice.todo.servlet;
 
 import by.practice.todo.model.Project;
-import by.practice.todo.model.Task;
 import by.practice.todo.repository.ProjectRepository;
-import by.practice.todo.repository.TaskRepository;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,15 +20,11 @@ public class ProjectListServlet extends HttpServlet {
             throws ServletException, IOException {
 
         ProjectRepository projectRepository = new ProjectRepository();
-        TaskRepository taskRepository = new TaskRepository();
+
         List<Project> projects = null;
         try {
             projects = projectRepository.getAllProjects();
-            for (Project project : projects) {
-                long projectId = project.getId();
-                List<Task> tasks = taskRepository.getTasksByProjectId(projectId);
-                project.setTasks(tasks);
-            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

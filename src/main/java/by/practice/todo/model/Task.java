@@ -1,15 +1,34 @@
 package by.practice.todo.model;
 
+import javax.persistence.*;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 
+@Entity
+@Table(name = "tasks", uniqueConstraints = {@UniqueConstraint(columnNames = {"task_id"})})
 public class Task {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "task_id", nullable = false, unique = true)
     private long id;
+    @Column(name = "description")
     private String description;
+    @Column(name = "completed")
     private boolean completed;
+    @Column(name = "created_date")
     private Date createdDate;
+
+    @Column(name = "project_id")
     private long projectId;
+
+    @Column(name = "period")
+    @Enumerated(EnumType.STRING)
     private Period period;
+
+
+    public Task() {
+    }
 
     public Task(long id, String description, boolean completed, Date createdDate, long projectId, Period period) {
         this.id = id;
@@ -19,6 +38,7 @@ public class Task {
         this.projectId = projectId;
         this.period = period;
     }
+
 
     public long getId() {
         return id;
@@ -75,11 +95,11 @@ public class Task {
 
     @Override
     public String toString() {
-        return String.format("%s;%s;%s;%s", description, isCompleted(), dateFormatted(),period);
+        return String.format("%s;%s;%s;%s", description, isCompleted(), dateFormatted(), period);
     }
 
     private String isCompleted() {
-        return completed ? "completed" : "not completed";
+        return completed ? "completed" : "uncompleted";
     }
 
 

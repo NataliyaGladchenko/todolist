@@ -2,6 +2,14 @@ package by.practice.todo.repository;
 
 
 import by.practice.todo.model.Project;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.Metadata;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,39 +20,31 @@ public class ProjectRepository {
     public ProjectRepository() {
     }
 
+    public static SessionFactory getSessionFactory(){
+        StandardServiceRegistry registry;
+        SessionFactory sessionFactory;
+        registry = new StandardServiceRegistryBuilder().configure("hibernate.cfg.xml").build();
+
+        Metadata metadata = new MetadataSources(registry).getMetadataBuilder().build();
+
+        sessionFactory = metadata.getSessionFactoryBuilder().build();
+        return sessionFactory;
+
+    }
     public List<Project> getAllProjects() throws SQLException {
-        Connection connection = DataSource.getInstance().getConnection();
-        Statement statement = connection.createStatement();
-        ResultSet result = statement.executeQuery("SELECT * FROM projects");
-        List<Project> projects = new ArrayList<>();
-        while (result.next()) {
-            Project project = new Project(result.getLong("project_id"), result.getString("project_name"));
-            projects.add(project);
-        }
-        if (statement != null) {
-            statement.close();
-        }
-        if (connection != null) {
-            connection.close();
-        }
+        Session session = getSessionFactory().openSession();
+        List<Project> projects = session.createQuery("FROM Project ").list();
+        session.close();
+
         return projects;
     }
 
     public void addProject(String projectName) throws SQLException{
-        Connection connection = DataSource.getInstance().getConnection();
-        Statement statement = connection.createStatement();
-        PreparedStatement preparedStatement = connection.prepareStatement("insert into projects (project_name) value (?)");
-        preparedStatement.setString(1,projectName);
-        preparedStatement.executeUpdate();
+        Session session = getSessionFactory().openSession();
 
-        if (preparedStatement != null){
-            preparedStatement.close();
-        }
-        if (statement != null) {
-            statement.close();
-        }
-        if (connection != null) {
-            connection.close();
-        }
+        Project project = new Project();
+        project.setProjectName(projectName);
+        session.save(project);
+       session.close();
     }
 }
