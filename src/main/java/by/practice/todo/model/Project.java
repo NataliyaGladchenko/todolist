@@ -55,6 +55,4 @@ public class Project {
         return projectName + "\n" + tasks;
 
     }
-
-
 }

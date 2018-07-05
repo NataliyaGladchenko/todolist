@@ -25,11 +25,7 @@ public class AddProjectServlet extends HttpServlet {
 
         String projectName = request.getParameter("project_name");
         ProjectRepository projectRepository = new ProjectRepository();
-        try {
-            projectRepository.addProject(projectName);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        projectRepository.addProject(projectName);
 
         request.getRequestDispatcher("addprojectform.jsp").forward(request, response);
 

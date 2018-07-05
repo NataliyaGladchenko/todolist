@@ -20,7 +20,7 @@ public class ToDoApp {
     public void demo() throws SQLException {
         List<Project> projects = projectRepository.getAllProjects();
 
-        taskRepository.complete(27);
+        taskRepository.complete(28);
         for (Project project : projects) {
             System.out.println(project);
         }

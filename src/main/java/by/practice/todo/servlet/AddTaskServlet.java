@@ -31,11 +31,7 @@ public class AddTaskServlet extends HttpServlet {
 
 
         TaskRepository taskRepository = new TaskRepository();
-        try {
-            taskRepository.addTask( projectName, description,completed, createdDate, period);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        taskRepository.addTask(projectName, description, completed, createdDate, period);
 
         request.getRequestDispatcher("addtaskform.jsp").forward(request, response);
 

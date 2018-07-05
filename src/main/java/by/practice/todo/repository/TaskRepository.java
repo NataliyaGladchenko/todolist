@@ -32,53 +32,49 @@ public class TaskRepository {
 
     }
 
-    public List<Task> getTasks() throws SQLException {
+    public List<Task> getTasks() {
         Session session = getSessionFactory().openSession();
         List<Task> tasks = session.createQuery("FROM Task").list();
         return tasks;
     }
 
-    public void complete(long taskId) throws SQLException {
+    public void complete(long taskId) {
         Session session = getSessionFactory().openSession();
+        session.beginTransaction();
         Query query = session.createQuery("update Task set completed = :completed" +
                 " where id = :id");
         query.setParameter("completed", true);
         query.setParameter("id", taskId);
-        int result = query.executeUpdate();
+        query.executeUpdate();
+        session.getTransaction().commit();
     }
-//
-//    public void uncomplete(long taskId) throws SQLException {
-//        Session session = getSessionFactory().openSession();
-//        TaskRepository taskRepository = new TaskRepository();
-//        List<Task> tasks = taskRepository.getTasks();
-//        for (Task task : tasks) {
-//            if (task.getId() == taskId) {
-//                task.setCompleted(false);
-//                session.save(task);
-//            }
-//        }
-//    }
 
-
-
-    public void addTask(String projectName, String description, Boolean completed, Date createdDate, String period) throws SQLException {
+    public void uncomplete(long taskId) {
         Session session = getSessionFactory().openSession();
+        session.beginTransaction();
+        Query query = session.createQuery("update Task set completed = :completed" +
+                " where id = :id");
+        query.setParameter("completed", false);
+        query.setParameter("id", taskId);
+        query.executeUpdate();
+        session.getTransaction().commit();
+    }
+
+
+    public void addTask(String projectName, String description, Boolean completed, Date createdDate, String period) {
+        Session session = getSessionFactory().openSession();
+        session.beginTransaction();
+        Query query = session.createQuery("select id from Project  where projectName=?");
+        query.setParameter(0,projectName);
+        Long projectId = (long)((org.hibernate.query.Query) query).uniqueResult();
         Task task = new Task();
-        ProjectRepository projectRepository = new ProjectRepository();
-        List<Project> projects = projectRepository.getAllProjects();
-        for (Project project : projects) {
-            if (project.getProjectName().compareTo(projectName) == 0) {
-                Long projectId = project.getId();
-                task.setProjectId(projectId);
-                task.setDescription(description);
-                task.setCompleted(completed);
-                task.setCreatedDate(createdDate);
-                task.setPeriod(Period.valueOf(period));
-            }
-        }
-
+        task.setDescription(description);
+        task.setCompleted(completed);
+        task.setProjectId(projectId);
+        task.setCreatedDate(createdDate);
+        task.setPeriod(Period.valueOf(period));
         session.save(task);
-
+        session.getTransaction().commit();
         session.close();
 
 

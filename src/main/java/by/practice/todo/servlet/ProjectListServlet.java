@@ -22,12 +22,7 @@ public class ProjectListServlet extends HttpServlet {
         ProjectRepository projectRepository = new ProjectRepository();
 
         List<Project> projects = null;
-        try {
-            projects = projectRepository.getAllProjects();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        projects = projectRepository.getAllProjects();
 
         req.setAttribute("projects", projects);
 

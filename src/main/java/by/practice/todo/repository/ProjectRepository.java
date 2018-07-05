@@ -20,18 +20,17 @@ public class ProjectRepository {
     public ProjectRepository() {
     }
 
-    public static SessionFactory getSessionFactory(){
+    private static SessionFactory getSessionFactory() {
         StandardServiceRegistry registry;
         SessionFactory sessionFactory;
         registry = new StandardServiceRegistryBuilder().configure("hibernate.cfg.xml").build();
-
         Metadata metadata = new MetadataSources(registry).getMetadataBuilder().build();
-
         sessionFactory = metadata.getSessionFactoryBuilder().build();
         return sessionFactory;
 
     }
-    public List<Project> getAllProjects() throws SQLException {
+
+    public List<Project> getAllProjects() {
         Session session = getSessionFactory().openSession();
         List<Project> projects = session.createQuery("FROM Project ").list();
         session.close();
@@ -39,12 +38,11 @@ public class ProjectRepository {
         return projects;
     }
 
-    public void addProject(String projectName) throws SQLException{
+    public void addProject(String projectName) {
         Session session = getSessionFactory().openSession();
-
         Project project = new Project();
         project.setProjectName(projectName);
         session.save(project);
-       session.close();
+        session.close();
     }
 }
